@@ -1,0 +1,86 @@
+{
+  "widgetId": "0048",
+  "widgetFactoryVersion": "unknown",
+  "execution": {
+    "startTime": "2026-04-14T20:00:34.560044",
+    "endTime": "2026-04-14T20:00:42.713052",
+    "duration": 8.153008,
+    "status": "failed"
+  },
+  "input": {
+    "filename": "0048.png",
+    "originalPath": "/home/davide/Desktop/0048.png",
+    "fileSizeBytes": 37198,
+    "dimensions": null
+  },
+  "config": {
+    "model": "local-model",
+    "timeout": 500,
+    "iconLibraries": [
+      "lu",
+      "sf",
+      "ai",
+      "bi",
+      "bs",
+      "cg",
+      "ci",
+      "di",
+      "fa",
+      "fa6",
+      "fc",
+      "fi",
+      "gi",
+      "go",
+      "gr",
+      "hi",
+      "hi2",
+      "im",
+      "io",
+      "io5",
+      "lia",
+      "md",
+      "pi",
+      "rx",
+      "ri",
+      "si",
+      "sl",
+      "tb",
+      "tfi",
+      "ti",
+      "vsc",
+      "wi"
+    ],
+    "applogoLibraries": [
+      "si"
+    ],
+    "retrieval": {
+      "topK": 50,
+      "topM": 5,
+      "alpha": 0.8
+    },
+    "pipelinesEnabled": {
+      "layout": true,
+      "icon": true,
+      "graph": true,
+      "color": true
+    }
+  },
+  "error": {
+    "message": "Error code: 400 - {'error': 'The model has crashed without additional information. (Exit code: null)'}",
+    "type": "BadRequestError"
+  },
+  "files": {
+    "input": "input.png",
+    "log": {
+      "debug": "log/debug.json"
+    },
+    "artifacts": {
+      "1_preprocess": {
+        "original": "artifacts/1-preprocess/1.1-original.png"
+      }
+    }
+  },
+  "metadata": {
+    "pipeline": "generation"
+  }
+}

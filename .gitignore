@@ -38,3 +38,6 @@ output/
 batch-render-ready/
 libs/js/mutator/results/
 widgets/
+/apps/api/hub/models--timm--ViT-SO400M-16-SigLIP2-384/
+/apps/api/hub/models--Salesforce--blip2-opt-6.7b/
+/apps/api/hub/models--Salesforce--blip2-opt-2.7b/

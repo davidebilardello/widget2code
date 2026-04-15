@@ -26,7 +26,8 @@ from .search_fused import (
     retrieve_svg_filenames_from_libs_with_dual_details,
 )
 
-BLIP2_MODEL_ID = "Salesforce/blip2-opt-6.7b"
+#BLIP2_MODEL_ID = "Salesforce/blip2-opt-6.7b" TODO
+BLIP2_MODEL_ID = os.getenv("BLIP2_MODEL_ID", "Salesforce/blip2-opt-2.7b")
 BLIP2_MAX_NEW_TOKENS = 32
 BLIP2_NUM_BEAMS = 4
 SIGLIP_MODEL_NAME = "ViT-SO400M-16-SigLIP2-384"
@@ -124,9 +125,19 @@ def load_blip2(device: str = None):
     if device == "cuda":
         try:
             dtype, device_map = torch.float16, {"": 0}
+            
+            # Check quantization flags
+            load_in_8bit = os.getenv("BLIP2_LOAD_IN_8BIT", "false").lower() == "true"
+            load_in_4bit = os.getenv("BLIP2_LOAD_IN_4BIT", "false").lower() == "true"
+            
             processor = Blip2Processor.from_pretrained(BLIP2_MODEL_ID, use_fast=True)
             model = Blip2ForConditionalGeneration.from_pretrained(
-                BLIP2_MODEL_ID, dtype=dtype, device_map=device_map, low_cpu_mem_usage=True
+                BLIP2_MODEL_ID, 
+                dtype=dtype, 
+                device_map=device_map, 
+                low_cpu_mem_usage=True,
+                load_in_8bit=load_in_8bit,
+                load_in_4bit=load_in_4bit
             ).eval()
         except Exception as e:
             print(f"⚠ BLIP2 failed on CUDA: {e}\n→ Falling back to CPU...")

@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "imageWidth": 990,
+    "imageHeight": 1000,
+    "totalDetections": 0,
+    "detectionsByLabel": {},
+    "generatedAt": "2026-04-14T20:00:36.553109"
+  },
+  "detections": {
+    "raw": [],
+    "pixel": [],
+    "postProcessed": []
+  }
+}
