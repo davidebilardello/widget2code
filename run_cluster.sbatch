@@ -24,14 +24,14 @@ export USE_PADDLE=0
 export TRANSFORMERS_NO_ADVISORY_WARNINGS=1
 export NCCL_P2P_DISABLE=1
 export PYTORCH_ALLOC_CONF="expandable_segments:True"
-export VLLM_LOGGING_LEVEL=WARNING
+export VLLM_LOGGING_LEVEL=INFO
 export VLLM_NO_USAGE_STATS=1
 
 # ========== Cache directories ==========
 export MY_CACHE_DIR="/work/tesi_dbilardello/.cache_ml"
 mkdir -p "$MY_CACHE_DIR"
 
-export TRITON_CACHE_DIR="$MY_CACHE_DIR/triton"
+export TRITON_CACHE_DIR="$MY_CACHE_DIR/$USER/triton"
 export HF_HOME="$MY_CACHE_DIR/huggingface"
 export TORCH_HOME="$MY_CACHE_DIR/torch"
 export TORCHINDUCTOR_CACHE_DIR="$MY_CACHE_DIR/torchinductor"
@@ -61,24 +61,27 @@ python -m vllm.entrypoints.openai.api_server \
     --trust-remote-code \
     --max-model-len 12288 \
     --gpu-memory-utilization 0.70 \
-    &
+    > >(tee -a sbatch_logs/vllm_server.log) 2>&1 &
 VLLM_PID=$!
 
 echo "⏳ Waiting for vLLM server (PID: $VLLM_PID)..."
-for i in $(seq 1 300); do
+for i in $(seq 1 900); do
     if curl -sf "http://localhost:${VLLM_PORT}/health" > /dev/null 2>&1; then
         echo "✅ vLLM server ready after ${i}s!"
         break
     fi
     if ! kill -0 "$VLLM_PID" 2>/dev/null; then
         echo "❌ vLLM server process died"
+        cat sbatch_logs/vllm_server.log
         exit 1
     fi
     sleep 1
 done
 
 if ! curl -sf "http://localhost:${VLLM_PORT}/health" > /dev/null 2>&1; then
-    echo "❌ vLLM server failed to start within 300s"
+    echo "❌ vLLM server failed to start within 900s"
+    echo "Last 50 lines of log:"
+    tail -n 50 sbatch_logs/vllm_server.log
     kill "$VLLM_PID" 2>/dev/null
     exit 1
 fi
