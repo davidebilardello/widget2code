@@ -35,7 +35,9 @@ export VLLM_TORCH_COMPILE_LEVEL=0
 export MY_CACHE_DIR="/work/tesi_dbilardello/.cache_ml"
 mkdir -p "$MY_CACHE_DIR"
 
-export TRITON_CACHE_DIR="$MY_CACHE_DIR/$USER/triton"
+TRITON_LOCAL_BASE="${SLURM_TMPDIR:-/tmp}"
+export TRITON_CACHE_DIR="$TRITON_LOCAL_BASE/$USER/triton_${SLURM_JOB_ID:-$$}"
+mkdir -p "$TRITON_CACHE_DIR"
 export HF_HOME="$MY_CACHE_DIR/huggingface"
 export TORCH_HOME="$MY_CACHE_DIR/torch"
 export TORCHINDUCTOR_CACHE_DIR="$MY_CACHE_DIR/torchinductor"
