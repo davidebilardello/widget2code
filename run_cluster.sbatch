@@ -54,10 +54,12 @@ cd apps/api
 source .venv/bin/activate
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
+npx playwright install
 cd ..
 cd ..
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
+npx playwright install
 
 # ========== vLLM Server (4 GPU tensor parallel) ==========
 VLLM_MODEL="Qwen/Qwen3-VL-30B-A3B-Instruct"
@@ -121,6 +123,36 @@ if ! curl -sf "http://localhost:8010/health" > /dev/null 2>&1; then
     exit 1
 fi
 
+# ========== Playground frontend (port 3060) ==========
+FRONTEND_PORT=${FRONTEND_PORT:-3060}
+export FRONTEND_PORT
+
+echo "🚀 Starting playground frontend on port $FRONTEND_PORT..."
+npm run dev -w apps/playground > >(tee -a sbatch_logs/frontend.log) 2>&1 &
+FRONTEND_PID=$!
+
+echo "⏳ Waiting for frontend on :$FRONTEND_PORT..."
+for i in $(seq 1 300); do
+    if curl -sf "http://localhost:${FRONTEND_PORT}/headless.html" > /dev/null 2>&1; then
+        echo "✅ Frontend ready after ${i}s!"
+        break
+    fi
+    if ! kill -0 "$FRONTEND_PID" 2>/dev/null; then
+        echo "❌ Frontend process died"
+        tail -n 50 sbatch_logs/frontend.log
+        kill "$API_PID" "$VLLM_PID" 2>/dev/null
+        exit 1
+    fi
+    sleep 1
+done
+
+if ! curl -sf "http://localhost:${FRONTEND_PORT}/headless.html" > /dev/null 2>&1; then
+    echo "❌ Frontend failed to start within 300s"
+    tail -n 50 sbatch_logs/frontend.log
+    kill "$FRONTEND_PID" "$API_PID" "$VLLM_PID" 2>/dev/null
+    exit 1
+fi
+
 # ========== Run pipeline ==========
 echo "🏭 Starting generation pipeline..."
 ./scripts/generation/generate-batch.sh ./mockups ./output 1
@@ -129,8 +161,10 @@ echo "🎨 Starting rendering pipeline..."
 
 # ========== Cleanup ==========
 echo "🧹 Cleaning up background processes..."
+kill "$FRONTEND_PID" 2>/dev/null
 kill "$API_PID" 2>/dev/null
 kill "$VLLM_PID" 2>/dev/null
+wait "$FRONTEND_PID" 2>/dev/null
 wait "$API_PID" 2>/dev/null
 wait "$VLLM_PID" 2>/dev/null
 echo "✅ Job completed!"
