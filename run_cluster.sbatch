@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=screencoder_vllm
+#SBATCH --job-name=widget2code_vllm
 #SBATCH --output=sbatch_logs/screencoder_%j.out
 #SBATCH --error=sbatch_logs/screencoder_%j.err
 #SBATCH --nodes=1
