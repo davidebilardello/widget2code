@@ -66,7 +66,7 @@ python -m vllm.entrypoints.openai.api_server \
     --tensor-parallel-size 4 \
     --port "$VLLM_PORT" \
     --trust-remote-code \
-    --max-model-len 11000 \
+    --max-model-len 30288 \
     --gpu-memory-utilization 0.75 \
     > >(tee -a sbatch_logs/vllm_server.log) 2>&1 &
 VLLM_PID=$!
