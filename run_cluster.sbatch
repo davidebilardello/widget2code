@@ -44,7 +44,10 @@ export XDG_CONFIG_HOME="$MY_CACHE_DIR/config"
 mkdir -p sbatch_logs
 
 # ========== Activate venv ==========
+cd apps/api
 source .venv/bin/activate
+cd ..
+cd ..
 
 # ========== vLLM Server (4 GPU tensor parallel) ==========
 VLLM_MODEL="Qwen/Qwen3-VL-30B-A3B-Instruct"
