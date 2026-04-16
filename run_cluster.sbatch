@@ -116,9 +116,9 @@ fi
 
 # ========== Run pipeline ==========
 echo "🏭 Starting generation pipeline..."
-./scripts/generation/generate-batch.sh ./mockups ./output 4
+./scripts/generation/generate-batch.sh ./mockups ./output 1
 echo "🎨 Starting rendering pipeline..."
-./scripts/rendering/render-batch.sh ./output 4
+./scripts/rendering/render-batch.sh ./output 1
 
 # ========== Cleanup ==========
 echo "🧹 Cleaning up background processes..."
