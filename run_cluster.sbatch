@@ -65,7 +65,7 @@ python -m vllm.entrypoints.openai.api_server \
 VLLM_PID=$!
 
 echo "⏳ Waiting for vLLM server (PID: $VLLM_PID)..."
-for i in $(seq 1 900); do
+for i in $(seq 1 1800); do
     if curl -sf "http://localhost:${VLLM_PORT}/health" > /dev/null 2>&1; then
         echo "✅ vLLM server ready after ${i}s!"
         break
@@ -79,7 +79,7 @@ for i in $(seq 1 900); do
 done
 
 if ! curl -sf "http://localhost:${VLLM_PORT}/health" > /dev/null 2>&1; then
-    echo "❌ vLLM server failed to start within 900s"
+    echo "❌ vLLM server failed to start within 1800s"
     echo "Last 50 lines of log:"
     tail -n 50 sbatch_logs/vllm_server.log
     kill "$VLLM_PID" 2>/dev/null
