@@ -15,7 +15,7 @@
 #SBATCH --mail-user=285039@studenti.unimore.it
 
 module unload cuda
-module load cuda/12.6.3
+module load cuda/12.6.3-none-none || { echo "Failed to load CUDA module"; exit 1; }
 
 export KMP_DUPLICATE_LIB_OK=TRUE
 export USE_TORCH=1
