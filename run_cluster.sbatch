@@ -99,7 +99,7 @@ npm run api &
 API_PID=$!
 
 echo "⏳ Waiting for API server..."
-for i in $(seq 1 120); do
+for i in $(seq 1 600); do
     if curl -sf "http://localhost:8010/health" > /dev/null 2>&1; then
         echo "✅ API server ready after ${i}s!"
         break
@@ -113,7 +113,7 @@ for i in $(seq 1 120); do
 done
 
 if ! curl -sf "http://localhost:8010/health" > /dev/null 2>&1; then
-    echo "❌ API server failed to start within 120s"
+    echo "❌ API server failed to start within 600s"
     kill "$API_PID" "$VLLM_PID" 2>/dev/null
     exit 1
 fi
