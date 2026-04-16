@@ -17,6 +17,9 @@
 module unload cuda
 module load cuda/12.6.3-none-none || { echo "Failed to load CUDA module"; exit 1; }
 
+module load node-js/22.14.0-gcc-11.4.0
+
+
 export KMP_DUPLICATE_LIB_OK=TRUE
 export USE_TORCH=1
 export USE_TF=0
