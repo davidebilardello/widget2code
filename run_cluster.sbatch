@@ -29,6 +29,7 @@ export NCCL_P2P_DISABLE=1
 export PYTORCH_ALLOC_CONF="expandable_segments:True"
 export VLLM_LOGGING_LEVEL=INFO
 export VLLM_NO_USAGE_STATS=1
+export VLLM_TORCH_COMPILE_LEVEL=0
 
 # ========== Cache directories ==========
 export MY_CACHE_DIR="/work/tesi_dbilardello/.cache_ml"
