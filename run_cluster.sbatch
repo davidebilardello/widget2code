@@ -159,6 +159,10 @@ echo "🏭 Starting generation pipeline..."
 echo "🎨 Starting rendering pipeline..."
 ./scripts/rendering/render-batch.sh ./output 1
 
+# ========== Evaluation ==========
+echo "📊 Starting evaluation..."
+./scripts/evaluation/run_evaluation.sh ./output -g ./data/widget2code-benchmark/test --cuda -w 16
+
 # ========== Cleanup ==========
 echo "🧹 Cleaning up background processes..."
 kill "$FRONTEND_PID" 2>/dev/null

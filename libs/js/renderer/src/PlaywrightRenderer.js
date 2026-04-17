@@ -29,7 +29,10 @@ export class PlaywrightRenderer {
     console.log('[PlaywrightRenderer] Launching browser...');
     this.browser = await chromium.launch({
       headless: this.options.headless,
-      args: ['--font-render-hinting=none']
+      args: [
+        '--font-render-hinting=none',
+        '--disable-features=OpaqueResponseBlockingV01,OpaqueResponseBlockingV02,CorbAllowList'
+      ]
     });
     console.log('[PlaywrightRenderer] Browser launched');
   }
