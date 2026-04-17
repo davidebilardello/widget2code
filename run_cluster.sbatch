@@ -54,12 +54,12 @@ cd apps/api
 source .venv/bin/activate
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
-npx playwright install
+npx playwright install install-deps
 cd ..
 cd ..
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
-npx playwright install
+npx playwright install install-deps
 
 # ========== vLLM Server (4 GPU tensor parallel) ==========
 VLLM_MODEL="Qwen/Qwen3-VL-30B-A3B-Instruct"

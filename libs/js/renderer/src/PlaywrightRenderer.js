@@ -95,7 +95,7 @@ export class PlaywrightRenderer {
       console.log(`[PlaywrightRenderer] Navigating to ${headlessUrl}...`);
 
       await page.goto(headlessUrl, {
-        waitUntil: 'networkidle',
+        waitUntil: 'domcontentloaded',
         timeout: this.options.timeout
       });
 
@@ -232,7 +232,7 @@ export class PlaywrightRenderer {
       console.log(`[PlaywrightRenderer] Navigating to ${headlessUrl}...`);
 
       await page.goto(headlessUrl, {
-        waitUntil: 'networkidle',
+        waitUntil: 'domcontentloaded',
         timeout: this.options.timeout
       });
 
