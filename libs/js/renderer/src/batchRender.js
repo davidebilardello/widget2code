@@ -171,7 +171,7 @@ export async function batchRender(inputPath, options = {}) {
   for (let i = 0; i < concurrency; i++) {
     const renderer = new PlaywrightRenderer({
       devServerUrl,
-      timeout: 30000,
+      timeout: 180000,
       verbose: false
     });
     await renderer.initialize();

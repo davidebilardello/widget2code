@@ -21,7 +21,7 @@ export async function render(widgetDir, options = {}) {
     // Initialize renderer
     const renderer = new PlaywrightRenderer({
       devServerUrl,
-      timeout: 30000,
+      timeout: 180000,
       verbose: false
     });
 
