@@ -49,13 +49,22 @@ export XDG_CONFIG_HOME="$MY_CACHE_DIR/config"
 
 mkdir -p sbatch_logs
 
+# ========== Tesseract (via conda) ==========
+TESSERACT_CONDA_ENV="$HOME/.conda/envs/tesseract-bin"
+if [ ! -f "$TESSERACT_CONDA_ENV/bin/tesseract" ]; then
+    echo "Installing tesseract via conda..."
+    conda create -n tesseract-bin -c conda-forge tesseract -y
+fi
+export TESSERACT_CMD="$TESSERACT_CONDA_ENV/bin/tesseract"
+export TESSDATA_PREFIX="$TESSERACT_CONDA_ENV/share/tessdata"
+
 # ========== Activate venv ==========
 cd apps/api
 source .venv/bin/activate
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
 npx playwright install install-deps
-pip install pandas
+pip install -r tools/evaluation/requirements.txt
 
 cd ..
 cd ..

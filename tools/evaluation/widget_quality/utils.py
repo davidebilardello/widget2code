@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
+import os
 from PIL import Image
 import pytesseract
+pytesseract.pytesseract.tesseract_cmd = os.environ.get('TESSERACT_CMD', 'tesseract')
 from skimage.color import rgb2lab
 from skimage.metrics import structural_similarity as ssim
 
