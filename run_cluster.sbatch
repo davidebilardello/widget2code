@@ -64,7 +64,7 @@ source .venv/bin/activate
 npm uninstall sharp
 npm install --include=optional --os=linux --cpu=x64 sharp
 npx playwright install install-deps
-pip install -r tools/evaluation/requirements.txt
+pip install -r ../../tools/evaluation/requirements.txt
 
 cd ..
 cd ..
