@@ -169,7 +169,7 @@ echo "🎨 Starting rendering pipeline..."
 
 # ========== Evaluation ==========
 echo "📊 Starting evaluation..."
-./scripts/evaluation/run_evaluation.sh ./output -g ./mockups --cuda -w 16
+./scripts/evaluation/run_evaluation.sh ./output -g ./gt --cuda -w 16
 
 # ========== Cleanup ==========
 echo "🧹 Cleaning up background processes..."
