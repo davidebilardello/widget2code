@@ -68,6 +68,7 @@ pip install -r ../../tools/evaluation/requirements.txt
 
 cd ..
 cd ..
+./tools/evaluation/setup.sh
 
 # ========== vLLM Server (4 GPU tensor parallel) ==========
 VLLM_MODEL="Qwen/Qwen3-VL-30B-A3B-Instruct"
